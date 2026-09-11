@@ -1,0 +1,26 @@
+<FXCHAIN
+SHOW 0
+LASTSEL 0
+DOCKED 0
+    BYPASS 0 0 0
+    <LV2 "LV2: Ratatouille (brummer) (Mono)" urn:brummer:ratatouille ""
+      CFG 0 731 502 ""
+      <IN_PINS
+      >
+      <OUT_PINS
+        PIN 0 0 1
+      >
+      P Knob0 -0.60000002384185791 Knob1 12 Knob2 0.429999977350234985 Knob3 0.859999954700469971 Knob4 -64 NormalizeA 0
+      P NormalizeB 1 Knob5 -5.200000286102294922 NormalizeSlotA 0 NormalizeSlotB 0 ENABLE 1 eraseSlotA 0 eraseSlotB 0
+      P eraseIr 0 eraseIr1 0 buffered 1 phase 0
+      <STATE
+        S urn:brummer:ratatouille#Neural_Model "/home/cepedale/AUDIO/IR/NAM/AMP HEADS/Fender/FAN TWINS MED amp.nam" 3
+        S urn:brummer:ratatouille#Neural_Model1 None 3
+        S urn:brummer:ratatouille#irfile "/home/cepedale/AUDIO/IR/Cabins/YA MES 212 V30 - Limited/48k (Fractal, Line 6, Suhr, etc.)/Natural Phase Singles/YA MES 212 V30 57-2.wav" 3
+        S urn:brummer:ratatouille#irfile1 "/home/cepedale/AUDIO/IR/Cabins/Bass Ampeg SVT 8x10/Ampeg 8x10 57 A107.wav" 3
+      >
+    >
+    FLOATPOS 0 0 0 0
+    FXID {4A802724-D231-D44A-3E03-DD2BF56ED8FD}
+    WAK 0 0
+>

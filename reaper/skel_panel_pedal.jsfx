@@ -1,0 +1,41 @@
+desc:Skeletons Pedal
+// One instance = one live-view pedal. Param-link Wet / On / Knobs / Switches
+// to hosted FX. Rename sliders (text after `>`) for GTK labels when there is
+// no schema-1 JSON comment.
+//
+// Layout (title, #rrggbb color, discrete knobs, multi-state switches) lives in
+// this FX comment as schema-1 JSON. Write it with Pedal Panel Editor:
+// Scripts/Skeletons/skel_panel_editor.lua (needs ReaImGui from ReaPack).
+// Old comments (`kind`, color 0–11) are ignored.
+//
+// {"schema":1,"title":"RBJ 1073","color":"#2b6f76","wet_label":"Wet","on_label":"On",
+//  "controls":{"knobs":[{"index":2,"label":"Low","type":"continuous"},
+//    {"index":3,"label":"Mid Hz","type":"discrete","ticks":["360","700","1.6k"]},
+//    {"index":4,"label":"Mid","type":"continuous"}],
+//    "switches":[{"index":8,"label":"HPF","type":"multi","ticks":["Off","50","80"]}]}}
+//
+// Dummy indices stay Wet=0, On=1, knobs 2–7, switches 8–10. Unused sliders are
+// omitted from JSON, not remapped. Slider names still work if the comment is empty.
+
+slider1:1<0,1,0.001>Wet
+slider2:1<0,1,1>On
+slider3:0.5<0,1,0.001>Knob 1
+slider4:0.5<0,1,0.001>Knob 2
+slider5:0.5<0,1,0.001>Knob 3
+slider6:0.5<0,1,0.001>Knob 4
+slider7:0.5<0,1,0.001>Knob 5
+slider8:0.5<0,1,0.001>Knob 6
+slider9:0<0,1,1>Switch 1
+slider10:0<0,1,1>Switch 2
+slider11:0<0,1,1>Switch 3
+slider12:3<2,6,1>Knobs
+slider13:0<0,3,1>Switches
+slider14:0<0,11,1>Color
+slider15:0<0,1,0>Title
+
+in_pin:none
+out_pin:none
+
+@slider
+@block
+@sample

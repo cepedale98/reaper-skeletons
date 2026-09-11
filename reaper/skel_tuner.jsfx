@@ -1,0 +1,133 @@
+desc:Skeletons tuner (gmem)
+// AMDF pitch detector for a dry guitar input (IN track, before amp/cab).
+// Publishes to a private gmem so the Lua agent can read it without FX params.
+//
+// gmem[0] frequency Hz
+// gmem[1] cents off nearest equal-tempered note
+// gmem[2] signal level 0..1
+// gmem[3] midi note number (float)
+// gmem[4] heartbeat (time)
+
+slider1:0<-24,24,1>transpose (semitones)
+slider2:-42<-80,-20,1>gate (dB)
+
+options:gmem=RappTuner
+
+@init
+raw_len = 2048;
+raw = 0;
+w = 0;
+level = 0;
+smooth_freq = 0;
+hold = 0;
+last_freq = 0;
+last_cents = 0;
+last_note = -1;
+tick = 0;
+A4 = 440;
+min_hz = 75;
+max_hz = 700;
+
+@sample
+s = abs(spl0);
+level = max(s, level * 0.997);
+raw[w] = spl0;
+w = (w + 1) % raw_len;
+
+@block
+gmem[4] = time_precise();
+gmem[2] = min(1, level * 5);
+gate_lin = 10 ^ (slider2 / 20);
+
+freq = 0;
+cents = 0;
+note = -1;
+tick += 1;
+
+(level >= gate_lin && (tick % 3) == 0) ? (
+  min_lag = floor(srate / max_hz);
+  max_lag = floor(srate / min_hz);
+  (min_lag < 12) ? min_lag = 12;
+  (max_lag > 640) ? max_lag = 640;
+  ncmp = 192;
+  best_diff = 1e12;
+  best_lag = 0;
+  energy = 0;
+  lag = min_lag;
+  loop(1 + floor((max_lag - min_lag) / 2),
+    acc = 0;
+    i = 0;
+    loop(ncmp,
+      a = raw[(w - ncmp - lag + i + raw_len * 4) % raw_len];
+      b = raw[(w - ncmp + i + raw_len * 4) % raw_len];
+      acc += abs(a - b);
+      (lag == min_lag) ? energy += abs(b);
+      i += 1;
+    );
+    (acc < best_diff) ? (
+      best_diff = acc;
+      best_lag = lag;
+    );
+    lag += 2;
+  );
+  (best_lag > 0 && energy > ncmp * gate_lin && best_diff < energy * 0.45) ? (
+    refine_best = best_diff;
+    refine_lag = best_lag;
+    dlag = -1;
+    loop(3,
+      test = best_lag + dlag;
+      (test >= min_lag && test <= max_lag) ? (
+        acc = 0;
+        i = 0;
+        loop(ncmp,
+          a = raw[(w - ncmp - test + i + raw_len * 4) % raw_len];
+          b = raw[(w - ncmp + i + raw_len * 4) % raw_len];
+          acc += abs(a - b);
+          i += 1;
+        );
+        (acc < refine_best) ? ( refine_best = acc; refine_lag = test; );
+      );
+      dlag += 1;
+    );
+    cand = srate / refine_lag;
+    (smooth_freq < 1) ? smooth_freq = cand;
+    (smooth_freq >= 1) ? (
+      ratio = cand / smooth_freq;
+      (ratio > 0.78 && ratio < 1.28) ? smooth_freq = smooth_freq * 0.65 + cand * 0.35;
+      (ratio > 1.9 && ratio < 2.1) ? (
+        halved = cand * 0.5;
+        hr = halved / smooth_freq;
+        (hr > 0.85 && hr < 1.15) ? smooth_freq = smooth_freq * 0.7 + halved * 0.3;
+      );
+      (ratio > 0.47 && ratio < 0.53) ? (
+        doubled = cand * 2;
+        dr = doubled / smooth_freq;
+        (dr > 0.85 && dr < 1.15) ? smooth_freq = smooth_freq * 0.7 + doubled * 0.3;
+      );
+    );
+    freq = smooth_freq;
+    midi = 69 + 12 * log(freq / A4) / log(2) + slider1;
+    nearest = floor(midi + 0.5);
+    cents = (midi - nearest) * 100;
+    note = nearest;
+    last_freq = freq;
+    last_cents = cents;
+    last_note = note;
+    hold = 12;
+  );
+);
+
+(freq < 1 && hold > 0) ? (
+  hold -= 1;
+  freq = last_freq;
+  cents = last_cents;
+  note = last_note;
+);
+
+(freq < 1) ? (
+  smooth_freq = 0;
+);
+
+gmem[0] = freq;
+gmem[1] = cents;
+gmem[3] = note;

@@ -1,0 +1,26 @@
+{
+  "id": "cleantonic",
+  "label": "Cleantonic AME",
+  "slots": {
+    "guitar.amp": {
+      "A": {
+        "model": "/home/cepedale/AUDIO/IR/NAM/AMP HEADS/Fender/FAN TWINS MED amp.nam",
+        "ir": "/home/cepedale/AUDIO/IR/Cabins/YA MES 212 V30 - Limited/48k (Fractal, Line 6, Suhr, etc.)/Natural Phase Singles/YA MES 212 V30 57-2.wav"
+      },
+      "B": {
+        "model": null,
+        "ir": "/home/cepedale/AUDIO/IR/Cabins/Bass Ampeg SVT 8x10/Ampeg 8x10 57 A107.wav"
+      }
+    },
+    "guitar.input": {
+      "A": {
+        "model": "/home/cepedale/AUDIO/IR/PREAMP/JOYO American Sound/ST_AMERICAN_VO-0900_DR-0900_LOW-1200_MID-1200_HIGH-1500.nam",
+        "ir": null
+      },
+      "B": {
+        "model": null,
+        "ir": null
+      }
+    }
+  }
+}

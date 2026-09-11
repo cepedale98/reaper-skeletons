@@ -1,0 +1,36 @@
+desc:Skeletons Live
+// Legacy live bank. Newer templates use Skeletons Control on guitar.bus.
+// The agent deletes leftover instances; this file stays so old projects load.
+
+slider1:0.5<0,1,0.001>Gain
+slider2:0.5<0,1,0.001>Drive
+slider3:0.5<0,1,0.001>Tone
+slider4:0.35<0,1,0.001>FX Mix
+slider5:0.7<0,1,0.001>Output
+slider6:0<0,1,1>Boost
+slider7:1<0,1,1>FX
+slider8:0<0,1,1>Mute
+
+in_pin:none
+out_pin:none
+
+@slider
+@block
+@sample
+
+
+slider1:0.5<0,1,0.001>Gain
+slider2:0.5<0,1,0.001>Drive
+slider3:0.5<0,1,0.001>Tone
+slider4:0.35<0,1,0.001>FX Mix
+slider5:0.7<0,1,0.001>Output
+slider6:0<0,1,1>Boost
+slider7:1<0,1,1>FX
+slider8:0<0,1,1>Mute
+
+in_pin:none
+out_pin:none
+
+@slider
+@block
+@sample

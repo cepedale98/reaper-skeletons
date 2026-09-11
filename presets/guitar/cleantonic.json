@@ -1,0 +1,131 @@
+{
+  "id": "cleantonic",
+  "label": "Cleantonic AME MIX",
+  "bank": "cleantonic",
+  "category": "Clean",
+  "character": ["Compressed"],
+  "slots": {
+    "guitar.bus": {
+      "volume_db": 0
+    },
+    "guitar.input": {
+      "volume_db": 0,
+      "fx": [
+        {
+          "slot": 0,
+          "match": "ReaFir",
+          "ident": "reafir",
+          "bypass": false,
+          "key_params": [0, 1, 2],
+          "label": "ReaFir"
+        },
+        {
+          "slot": 1,
+          "match": "rbj1073",
+          "ident": "sstillwell/rbj1073",
+          "bypass": false,
+          "key_params": [0, 1, 2, 3, 4, 5],
+          "label": "1073"
+        },
+        {
+          "slot": 2,
+          "match": "Ratatouille",
+          "ident": "urn:brummer:ratatouille",
+          "bypass": false,
+          "ratatouille": {
+            "input_a": 0.8,
+            "output": 10.4,
+            "blend": 1.0,
+            "ir_mix": 0.6
+          },
+          "key_params": ["input_a", "output", "blend"],
+          "label": "Preamp"
+        }
+      ]
+    },
+    "guitar.pedals": {
+      "volume_db": 0,
+      "fx": [
+        {
+          "slot": 0,
+          "match": "distortion",
+          "ident": "guitar/distortion",
+          "bypass": true,
+          "key_params": [0, 1, 2],
+          "label": "Distortion"
+        },
+        {
+          "slot": 1,
+          "match": "1175",
+          "ident": "sstillwell/1175",
+          "bypass": false,
+          "key_params": [0, 1, 2, 3, 4, 5],
+          "label": "1175"
+        }
+      ]
+    },
+    "guitar.amp": {
+      "volume_db": 0,
+      "fx": [
+        {
+          "slot": 0,
+          "match": "Ratatouille",
+          "ident": "urn:brummer:ratatouille",
+          "bypass": false,
+          "ratatouille": {
+            "input_a": -0.6,
+            "output": 12.0,
+            "blend": 0.43,
+            "ir_mix": 0.86,
+            "input_b": -5.2
+          },
+          "key_params": ["input_a", "input_b", "blend", "output"],
+          "label": "Amp"
+        }
+      ]
+    },
+    "guitar.cabinet": {
+      "volume_db": 0,
+      "fx": [
+        {
+          "slot": 0,
+          "match": "chorus",
+          "ident": "sstillwell/chorus_stereo",
+          "bypass": false,
+          "key_params": [0, 1, 2, 3],
+          "label": "Chorus"
+        }
+      ]
+    },
+    "guitar.fx": {
+      "volume_db": 0,
+      "send_db": -8.0,
+      "fx": [
+        {
+          "slot": 0,
+          "match": "StereoField",
+          "ident": "loser/StereoField",
+          "bypass": false,
+          "key_params": [0, 1, 2],
+          "label": "Width"
+        },
+        {
+          "slot": 1,
+          "match": "rbj1073",
+          "ident": "sstillwell/rbj1073",
+          "bypass": false,
+          "key_params": [0, 1, 2, 3, 4, 5],
+          "label": "1073"
+        },
+        {
+          "slot": 2,
+          "match": "ReaVerb",
+          "ident": "reaverb",
+          "bypass": false,
+          "key_params": [0, 1, 2],
+          "label": "ReaVerb"
+        }
+      ]
+    }
+  }
+}

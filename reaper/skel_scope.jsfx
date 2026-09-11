@@ -1,0 +1,42 @@
+desc:Skeletons oscilloscope (gmem)
+// Pass-through scope. Downsamples the input into gmem for the GTK display.
+//
+// gmem[0] bin count
+// gmem[1] sample rate
+// gmem[2] peak 0..1
+// gmem[3] heartbeat
+// gmem[10 .. 10+N) waveform -1..1
+
+options:gmem=RappScope
+
+@init
+raw_len = 2048;
+raw = 0;
+w = 0;
+N = 128;
+peak = 0;
+
+@sample
+raw[w] = spl0;
+w = (w + 1) % raw_len;
+s = abs(spl0);
+peak = max(s, peak * 0.999);
+
+@block
+gmem[0] = N;
+gmem[1] = srate;
+gmem[2] = min(1, peak);
+gmem[3] = time_precise();
+span = raw_len / N;
+i = 0;
+loop(N,
+  acc = 0;
+  k = 0;
+  loop(span,
+    idx = (w - raw_len + i * span + k + raw_len) % raw_len;
+    acc += raw[idx];
+    k += 1;
+  );
+  gmem[10 + i] = acc / span;
+  i += 1;
+);

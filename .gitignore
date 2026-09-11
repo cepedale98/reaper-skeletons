@@ -1,0 +1,13 @@
+.devenv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+*.bak
+*~
+.DS_Store
+.cursor/

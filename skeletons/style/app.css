@@ -1,0 +1,321 @@
+/* 8px grid: 8 / 16 / 24 / 40 / 48 / 56 / 72.
+   Nested radius: outer = inner + padding (cards 16 = 8 inner + 8 pad).
+   Type: headline 15 / callout 13 / caption 12 / body 11 / small 10.
+   Hit: text buttons 40x20, icon 40, MODE primary 56. */
+
+#skeletons {
+  background-color: mix(@theme_bg_color, #000000, 0.12);
+  color: @theme_fg_color;
+}
+
+.section-status {
+  min-height: 40px;
+  padding: 0 8px;
+  background-color: mix(@theme_bg_color, @theme_fg_color, 0.08);
+  color: @theme_fg_color;
+  border-bottom: 1px solid @borders;
+}
+
+.section-body {
+  background-color: mix(@theme_bg_color, #000000, 0.10);
+}
+
+.section-tabs {
+  background-color: transparent;
+  color: @theme_fg_color;
+  min-height: 56px;
+  padding: 0 8px;
+}
+
+.section-stage {
+  background-color: transparent;
+  color: @theme_fg_color;
+}
+
+.section-footer {
+  min-height: 72px;
+  padding: 8px;
+  background-color: mix(@theme_bg_color, @theme_fg_color, 0.08);
+  color: @theme_fg_color;
+  border-top: 1px solid @borders;
+}
+
+.nav-cluster {
+  padding: 0;
+}
+
+.nav-cell {
+  min-width: 56px;
+}
+
+.nav-label {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.app-title {
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-size: 15px;
+  color: @theme_selected_bg_color;
+}
+
+.status-label {
+  font-size: 13px;
+}
+
+.section-title {
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 15px;
+  color: @theme_fg_color;
+}
+
+.rail-title {
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+.nav-pill {
+  background-color: mix(@theme_bg_color, @theme_fg_color, 0.08);
+  border: 1px solid @borders;
+  border-radius: 24px;
+  padding: 4px 8px;
+}
+
+.tab-icon {
+  background: none;
+  border: none;
+  color: @theme_fg_color;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 15px;
+  padding: 4px 8px;
+  min-width: 72px;
+  border-radius: 8px;
+}
+.tab-icon:checked {
+  background-color: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
+}
+.tab-badge {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 22px;
+  padding: 4px;
+}
+.tab-icon:checked .tab-badge {
+  background-color: mix(@theme_selected_fg_color, @theme_selected_bg_color, 0.18);
+}
+.tab-label {
+  font-size: 15px;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+.tab-note, .tab-arrow {
+  font-size: 12px;
+  color: @theme_unfocused_fg_color;
+  min-height: 12px;
+  padding: 0 4px;
+}
+.tab-mark {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.icon-toggle, .icon-btn {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid @borders;
+  background-color: mix(@theme_bg_color, @theme_fg_color, 0.06);
+}
+.icon-toggle:active, .icon-btn:active, .tactile:active {
+  background-color: mix(@theme_bg_color, @theme_fg_color, 0.16);
+}
+.icon-toggle:checked, .stomp:checked, .tactile:checked, .nav-primary:checked {
+  background-color: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
+  border-color: @theme_selected_bg_color;
+}
+
+.tactile {
+  border-radius: 8px;
+  min-height: 40px;
+  min-width: 40px;
+  padding: 8px 20px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  border: 1px solid @borders;
+  background-color: mix(@theme_bg_color, @theme_fg_color, 0.07);
+}
+
+.nav-primary {
+  min-width: 56px;
+  min-height: 56px;
+  padding: 8px;
+  border-radius: 28px;
+}
+
+.address-line {
+  font-family: monospace;
+  font-size: 10px;
+  opacity: 0.75;
+}
+
+.ok { color: #2e7d32; }
+.bad { color: #c62828; }
+
+.stomp {
+  border-radius: 8px;
+  font-weight: bold;
+  min-width: 56px;
+  min-height: 40px;
+  border: 1px solid @borders;
+}
+
+.card {
+  background-color: mix(@theme_bg_color, @theme_fg_color, 0.08);
+  color: @theme_fg_color;
+  border: 1px solid mix(@borders, #000000, 0.25);
+  border-radius: 16px;
+  padding: 8px;
+  margin: 0 0 8px 0;
+}
+
+.fx-card {
+  padding: 8px;
+}
+
+.fx-header {
+  min-height: 40px;
+}
+
+.fx-controls {
+  min-height: 56px;
+}
+
+.card-title {
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+
+.card-sub {
+  font-family: monospace;
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.ctrl-name {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.ctrl-caption {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.param-slider, .param-switch, .param-spin {
+  padding: 0 4px;
+}
+
+.chain-bar {
+  min-height: 48px;
+  padding: 8px;
+  margin: 0 0 8px 0;
+}
+
+.side-rail {
+  min-width: 88px;
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 16px;
+}
+
+.track-chip {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.slot-title {
+  font-size: 11px;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+.live-badge {
+  font-weight: bold;
+  letter-spacing: 4px;
+  font-size: 15px;
+  color: @theme_selected_bg_color;
+}
+
+.live-stage {
+  padding: 16px;
+}
+
+.pedal {
+  min-width: 200px;
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid mix(@borders, #000000, 0.35);
+  background-color: mix(@theme_bg_color, @theme_fg_color, 0.10);
+}
+.pedal-title {
+  font-family: "Noto Serif", "Liberation Serif", "DejaVu Serif", serif;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-size: 22px;
+}
+.pedal-foot {
+  min-width: 168px;
+  min-height: 40px;
+}
+.pedal-cycle {
+  min-width: 72px;
+  min-height: 32px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: bold;
+}
+.pedal-wet {
+  min-height: 16px;
+  padding: 0;
+  margin: 0;
+  opacity: 0.85;
+}
+.pedal-off {
+  opacity: 0.7;
+}
+.pedal-c0 { background-color: mix(@theme_bg_color, #2a6bb8, 0.62); }
+.pedal-c1 { background-color: mix(@theme_bg_color, #8a9098, 0.58); }
+.pedal-c2 { background-color: mix(@theme_bg_color, #e6d9b0, 0.55); }
+.pedal-c3 { background-color: mix(@theme_bg_color, #c62828, 0.58); }
+.pedal-c4 { background-color: mix(@theme_bg_color, #e07020, 0.58); }
+.pedal-c5 { background-color: mix(@theme_bg_color, #2e8b47, 0.58); }
+.pedal-c6 { background-color: mix(@theme_bg_color, #6b46c1, 0.58); }
+.pedal-c7 { background-color: mix(@theme_bg_color, #1a1a1c, 0.72); }
+.pedal-c8 { background-color: mix(@theme_bg_color, #2a9aa8, 0.58); }
+.pedal-c9 { background-color: mix(@theme_bg_color, #c2185b, 0.55); }
+.pedal-c10 { background-color: mix(@theme_bg_color, #6d4c41, 0.58); }
+.pedal-c11 { background-color: mix(@theme_bg_color, #455a7a, 0.58); }
+
+.hint {
+  font-size: 10px;
+  opacity: 0.65;
+}
+
+.empty-hint {
+  opacity: 0.7;
+  padding: 24px;
+  font-size: 13px;
+}

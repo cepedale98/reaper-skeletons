@@ -1,0 +1,13 @@
+<FXCHAIN
+SHOW 0
+LASTSEL 0
+DOCKED 0
+    BYPASS 0 0 0
+    <JS sstillwell/chorus_stereo ""
+      15 1 0.75 0.7 -6 -6 0 0.25 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    >
+    WET 0.399878 0
+    FLOATPOS 0 0 0 0
+    FXID {EBE41F53-2E44-DFF9-DF32-3E85122207AA}
+    WAK 0 0
+>

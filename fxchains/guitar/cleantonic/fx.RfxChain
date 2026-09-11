@@ -1,0 +1,30 @@
+<FXCHAIN
+SHOW 0
+LASTSEL 0
+DOCKED 0
+    BYPASS 0 0 0
+    <JS loser/StereoField ""
+      0 185 -27 0 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    >
+    FLOATPOS 0 0 0 0
+    FXID {96EAD568-2016-C8D0-4904-898FD4961313}
+    WAK 0 0
+    BYPASS 0 0 0
+    <JS sstillwell/rbj1073 ""
+      4 4 4.8 3 2.9 3.6 0 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    >
+    FLOATPOS 0 0 0 0
+    FXID {04A4ACD2-11CE-034A-0F9D-9D816127199B}
+    WAK 0 0
+    BYPASS 0 0 0
+    <VST "VST: ReaVerb (Cockos)" reaverb.vst.so 0 "" 1919252066<56535472657662726561766572620000> ""
+      YnZlcu5e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAwgAAAAEAAAAAABAA
+      AAAQwQAAgD8AAAAAAAAAAAAAgD8AAIA/AAAAPwAAgD8AAIA/AAAAQEZJTEVMRFIAZAAAADwAAAAvbW50L3N0b3JhZ2UvQVVESU8vSVIvUkVWRVJCUy9FTVQgMjQ0IChB
+      LiBCZXJuaGFyZCkvRU1UIDI0NCAoQS4gQmVybmhhcmQpLzMsMHMgTG93XzIgSGlnaF8yLndhdgBCQVNJQ0VESVQAHAAAAAAAgD8AAAdBAECcRjr9TT4AAAAAAACAPwAA
+      AAA=
+      AAAQAAAA
+    >
+    FLOATPOS 0 0 0 0
+    FXID {4DCB5DA4-D4AF-EF49-F438-E87AAB3AB120}
+    WAK 0 0
+>

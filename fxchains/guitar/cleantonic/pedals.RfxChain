@@ -1,0 +1,21 @@
+<FXCHAIN
+SHOW 0
+LASTSEL 0
+DOCKED 0
+    BYPASS 1 0 0
+    <JS guitar/distortion ""
+      12 6 -12 0 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    >
+    WET 0.149783 0
+    FLOATPOS 0 0 0 0
+    FXID {A81CCB10-6E6F-80BE-459A-4658A9D48A3B}
+    WAK 0 0
+    BYPASS 0 0 0
+    <JS sstillwell/1175 ""
+      -24.7 7 3.3 20 250 40.9 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    >
+    JS_DIMS 742 239
+    FLOATPOS 0 0 0 0
+    FXID {3A6397CF-46D6-4721-B957-BBF0AF2284C4}
+    WAK 0 0
+>

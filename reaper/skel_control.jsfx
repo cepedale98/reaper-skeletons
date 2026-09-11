@@ -1,0 +1,29 @@
+desc:Skeletons Control
+// Live-performance parameter bank on the Skeletons Guitar folder track only.
+// Param-link these sliders in REAPER to hosted FX. GTK Live view draws them.
+// Rename a slider (text after `>`) to change the label in the app.
+// Continuous slots: increment 0.001. Toggle slots: 0<0,1,1>.
+
+slider1:0.5<0,1,0.001>Gain
+slider2:0.5<0,1,0.001>Drive
+slider3:0.5<0,1,0.001>Tone
+slider4:0.35<0,1,0.001>FX Mix
+slider5:0.7<0,1,0.001>Output
+slider6:0<0,1,0.001>Slot 6
+slider7:0<0,1,0.001>Slot 7
+slider8:0<0,1,0.001>Slot 8
+slider9:0<0,1,1>Boost
+slider10:1<0,1,1>FX
+slider11:0<0,1,1>Mute
+slider12:0<0,1,1>Stomp 4
+slider13:0<0,1,1>Stomp 5
+slider14:0<0,1,1>Stomp 6
+slider15:0<0,1,1>Stomp 7
+slider16:0<0,1,1>Stomp 8
+
+in_pin:none
+out_pin:none
+
+@slider
+@block
+@sample
