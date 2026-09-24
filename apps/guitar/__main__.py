@@ -14,6 +14,7 @@ from skeletons.gi_init import Gdk, Gtk, Pango
 from skeletons.bridge.indices import Indices
 from skeletons.gtkutil import add_class, clear
 from skeletons.model import RigModel
+from skeletons.presets import load_set
 from skeletons.shell.application import run_app
 from skeletons.shell.window import AppWindow
 from skeletons.widgets.fileslot import FileSlot
@@ -568,6 +569,7 @@ class RolePage(Gtk.Box):
 class SkeletonsGuitar:
     def __init__(self, gtk_app: Gtk.Application):
         self.model = RigModel("guitar")
+        self._set = load_set("guitar")
         self.pages: dict[str, RolePage] = {}
         self.win = AppWindow("Skeletons Guitar", TABS, self._make_page, application=gtk_app)
         self.win.connect("close-request", self._on_close)
@@ -581,6 +583,7 @@ class SkeletonsGuitar:
         self.win.out_rail.level.on_change = lambda v: self._vol("guitar.bus", v)
         self.win.footer.info_btn.connect("toggled", lambda *_: self.refresh())
         self.win.live.on_param = self._live_param
+        self.win.live.on_preset = self.model.apply_preset
         self.win.live.on_hover = self._show_addr
         chained_tab = self.win.tabs.on_select
 
@@ -644,6 +647,17 @@ class SkeletonsGuitar:
         deg = self.model.degraded
         self.win.show_banner(deg)
         ok = self.model.alive and self.model.agent_alive
+        self.win.status.set_agent(self.model.agent_alive)
+        pid = self.model.state.get("current_preset") or None
+        preset_name = None
+        if pid:
+            for preset in self.model.presets:
+                if preset.get("id") == pid:
+                    preset_name = preset.get("label") or pid
+                    break
+            preset_name = preset_name or pid
+        self.win.status.set_preset(preset_name)
+        self.win.live.show_set(self._set.get("pages") or [], pid, self.model.presets)
         if ok:
             self.win.status.set_status("REAPER: connected ●", True)
         elif self.model.alive:

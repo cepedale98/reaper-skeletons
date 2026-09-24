@@ -25,6 +25,37 @@ def load_presets(instrument: str) -> list[dict]:
     return items
 
 
+def load_set(instrument: str) -> dict:
+    """Pages of four preset ids for the MODE strip.
+
+    This index is a floor-unit page (A–D). It is not a residency bank.
+    """
+    path = repo_root() / "sets" / f"{instrument}.json"
+    if path.is_file():
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            data = {}
+        pages = []
+        for page in data.get("pages") or []:
+            slots = [(slot or None) for slot in list(page.get("slots") or [])[:4]]
+            while len(slots) < 4:
+                slots.append(None)
+            pages.append({"slots": slots})
+        if pages:
+            return {"pages": pages}
+    ids = [p.get("id") for p in load_presets(instrument) if p.get("id") and not p.get("error")]
+    if not ids:
+        return {"pages": [{"slots": [None, None, None, None]}]}
+    pages = []
+    for start in range(0, len(ids), 4):
+        slots = list(ids[start : start + 4])
+        while len(slots) < 4:
+            slots.append(None)
+        pages.append({"slots": slots})
+    return {"pages": pages}
+
+
 def load_banks() -> dict[str, dict]:
     folder = repo_root() / "banks"
     out: dict[str, dict] = {}

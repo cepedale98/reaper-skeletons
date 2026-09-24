@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from skeletons.gi_init import Gtk, Pango
 
+from skeletons.gtkutil import add_class
+
 
 class FileSlot(Gtk.Box):
     """Ratatouille-style file row: type icon, normalize, filename, erase."""
@@ -15,7 +17,8 @@ class FileSlot(Gtk.Box):
         self.on_erase = None
 
         icon = Gtk.Label(label="NAM" if kind == "nam" else "IR")
-        icon.get_style_context().add_class("slot-title")
+        add_class(icon, "slot-title")
+        add_class(icon, "slot-badge")
         icon.set_size_request(36, -1)
 
         self._title = Gtk.Label(label=title)

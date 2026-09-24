@@ -43,15 +43,28 @@ class StatusBar(Gtk.CenterBox):
         cluster.append(self.warning)
         cluster.append(self.address)
 
+        self.agent_pill = Gtk.Label(label="AGENT")
+        add_class(self.agent_pill, "status-pill")
+        add_class(self.agent_pill, "bad")
+        self.agent_pill.set_valign(Gtk.Align.CENTER)
+
+        self.preset_pill = Gtk.Label(label="—")
+        add_class(self.preset_pill, "status-pill")
+        self.preset_pill.set_valign(Gtk.Align.CENTER)
+        self.preset_pill.set_ellipsize(Pango.EllipsizeMode.END)
+        self.preset_pill.set_max_width_chars(22)
+
         self.settings_btn = icon_button("preferences-system-symbolic", "Open environment settings")
         add_class(self.settings_btn, "tactile")
         self.settings_btn.set_valign(Gtk.Align.CENTER)
         self.settings_btn.set_halign(Gtk.Align.END)
         self.settings_btn.connect("clicked", lambda *_: open_settings())
 
-        end = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        end = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
         end.set_halign(Gtk.Align.END)
         end.set_valign(Gtk.Align.CENTER)
+        end.append(self.agent_pill)
+        end.append(self.preset_pill)
         end.append(self.settings_btn)
 
         self.set_center_widget(cluster)
@@ -73,3 +86,11 @@ class StatusBar(Gtk.CenterBox):
 
     def set_address(self, text: str) -> None:
         self.address.set_text(text or "")
+
+    def set_agent(self, up: bool) -> None:
+        ctx = self.agent_pill.get_style_context()
+        ctx.remove_class("ok" if not up else "bad")
+        add_class(self.agent_pill, "ok" if up else "bad")
+
+    def set_preset(self, name: str | None) -> None:
+        self.preset_pill.set_text(name or "—")

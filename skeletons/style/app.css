@@ -251,6 +251,16 @@
   opacity: 0.8;
 }
 
+.slot-badge {
+  min-width: 36px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid alpha(@theme_selected_bg_color, 0.35);
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 10px;
+}
+
 .live-badge {
   font-weight: bold;
   letter-spacing: 4px;
@@ -267,6 +277,8 @@
   padding: 8px;
   border-radius: 16px;
   border: 1px solid mix(@borders, #000000, 0.35);
+  border-left-width: 3px;
+  border-left-color: alpha(#ffffff, 0.55);
   background-color: mix(@theme_bg_color, @theme_fg_color, 0.10);
 }
 .pedal-title {
@@ -318,4 +330,87 @@
   opacity: 0.7;
   padding: 24px;
   font-size: 13px;
+}
+
+.perf-strip {
+  padding: 4px 8px;
+}
+
+.perf-bank {
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 13px;
+  min-width: 28px;
+}
+
+.perf-tile {
+  min-width: 128px;
+  min-height: 44px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid alpha(@theme_fg_color, 0.18);
+  background-color: alpha(@theme_bg_color, 0.55);
+}
+
+.perf-key {
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.perf-name {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.perf-tile-empty {
+  opacity: 0.45;
+  border-style: dotted;
+}
+
+.perf-tile-unsaved {
+  border-color: #ff9800;
+  border-width: 2px;
+}
+
+.perf-tile.perf-tile-active {
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.perf-tile.perf-tile-active.pedal-c1,
+.perf-tile.perf-tile-active.pedal-c2 {
+  color: #1a1a1c;
+}
+
+.perf-scene {
+  min-width: 96px;
+}
+
+.perf-divider {
+  min-width: 1px;
+  min-height: 28px;
+  margin: 8px 4px;
+  background-color: alpha(@theme_fg_color, 0.22);
+}
+
+.perf-caption-meta {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+
+.perf-caption-name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.status-pill {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  border: 1px solid alpha(@theme_selected_bg_color, 0.24);
 }
