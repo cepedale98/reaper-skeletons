@@ -399,37 +399,12 @@ class RolePage(Gtk.Box):
 
         self.heading = Gtk.Button(label=label)
         add_class(self.heading, "section-title")
+        add_class(self.heading, "panel-title")
         self.heading.set_has_frame(False)
-        self.heading.set_halign(Gtk.Align.CENTER)
+        self.heading.set_halign(Gtk.Align.START)
         self.heading.set_tooltip_text("Select this track in REAPER")
         self.heading.connect("clicked", lambda *_: model.select_role(role))
         self.append(self.heading)
-
-        bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-        add_class(bar, "card")
-        add_class(bar, "chain-bar")
-        bar.set_halign(Gtk.Align.CENTER)
-        self.chain_combo = Gtk.ComboBoxText()
-        self.chain_combo.set_size_request(200, -1)
-        self.chain_combo.set_tooltip_text("FX chains in this tab folder")
-        load_btn = Gtk.Button(label="Load")
-        add_class(load_btn, "tactile")
-        load_btn.set_tooltip_text("Load the selected .RfxChain onto this track")
-        self.chain_name = Gtk.Entry()
-        self.chain_name.set_placeholder_text("new name")
-        self.chain_name.set_width_chars(14)
-        save_btn = Gtk.Button(label="Save")
-        add_class(save_btn, "tactile")
-        save_btn.set_tooltip_text("Export hosted FX into this tab folder")
-        bar.append(self.chain_combo)
-        bar.append(load_btn)
-        bar.append(self.chain_name)
-        bar.append(save_btn)
-        self.append(bar)
-        self.chain_hint = Gtk.Label(label="")
-        self.chain_hint.set_halign(Gtk.Align.CENTER)
-        add_class(self.chain_hint, "hint")
-        self.append(self.chain_hint)
 
         self.cards_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
         self.cards_box.set_halign(Gtk.Align.FILL)
@@ -440,18 +415,13 @@ class RolePage(Gtk.Box):
         scroll.set_overlay_scrolling(False)
         scroll.set_child(self.cards_box)
         self.append(scroll)
-        self.empty = Gtk.Label(label="Load an FX chain, or add plugins on this track in REAPER.")
+        self.empty = Gtk.Label(label="Add plugins on this track in REAPER.")
         add_class(self.empty, "empty-hint")
         self.empty.set_wrap(True)
         self.empty.set_justify(Gtk.Justification.CENTER)
         self.empty.set_halign(Gtk.Align.CENTER)
         self.append(self.empty)
         self._cards: list[FxCard] = []
-        self._chain_ids: list[str] = []
-        self._filling_chains = False
-        load_btn.connect("clicked", self._load_chain)
-        save_btn.connect("clicked", self._save_chain)
-        self.chain_combo.connect("changed", self._chain_picked)
 
     def refresh(self) -> None:
         info = self.model.track_for(self.role)
@@ -459,7 +429,6 @@ class RolePage(Gtk.Box):
             self.heading.set_opacity(0.45)
             self.empty.set_text(f'Track "{self.role}" is missing from the skeleton')
             self.empty.set_visible(True)
-            self._refresh_chains()
             return
         self.heading.set_opacity(1.0)
         name = info.get("name") or self.role
@@ -467,7 +436,6 @@ class RolePage(Gtk.Box):
 
         fxlist = info.get("fx") or []
         show_addr = self.addr_on()
-        self._refresh_chains()
         display, modes = self._layout(fxlist)
         while len(self._cards) < len(display):
             card = FxCard(self.model, self.role, self.show_addr)
@@ -482,56 +450,6 @@ class RolePage(Gtk.Box):
         for j in range(len(display), len(self._cards)):
             self._cards[j].set_visible(False)
         self.empty.set_visible(not display)
-
-    def _library(self) -> dict:
-        return (self.model.state.get("library") or {}).get(self.role) or {}
-
-    def _refresh_chains(self) -> None:
-        lib = self._library()
-        files = lib.get("files") or []
-        ids = [f.get("id") for f in files if f.get("id")]
-        folder = lib.get("folder") or ""
-        if folder:
-            parts = folder.replace("\\", "/").rstrip("/").split("/")
-            self.chain_hint.set_text("/".join(parts[-2:]))
-        else:
-            self.chain_hint.set_text("")
-        if ids == self._chain_ids:
-            return
-        self._filling_chains = True
-        self.chain_combo.remove_all()
-        for cid in ids:
-            self.chain_combo.append(cid, cid)
-        self._chain_ids = ids
-        current = lib.get("current")
-        if current and current in ids:
-            self.chain_combo.set_active_id(current)
-            if not (self.chain_name.get_text() or "").strip():
-                self.chain_name.set_text(current)
-        elif ids:
-            self.chain_combo.set_active(0)
-        self._filling_chains = False
-
-    def _chain_picked(self, combo: Gtk.ComboBoxText) -> None:
-        if self._filling_chains:
-            return
-        cid = combo.get_active_id()
-        if cid:
-            self.chain_name.set_text(cid)
-
-    def _chain_id(self) -> str:
-        typed = (self.chain_name.get_text() or "").strip()
-        return typed or (self.chain_combo.get_active_id() or "")
-
-    def _load_chain(self, *_args) -> None:
-        cid = self._chain_id()
-        if cid:
-            self.model.send_cmd("load_chain", role=self.role, id=cid)
-
-    def _save_chain(self, *_args) -> None:
-        cid = self._chain_id()
-        if cid:
-            self.model.send_cmd("save_chain", role=self.role, id=cid)
 
     def _layout(self, fxlist: list[dict]) -> tuple[list[dict], list[str]]:
         hosted = [f for f in fxlist if not is_utility_fx(f)]

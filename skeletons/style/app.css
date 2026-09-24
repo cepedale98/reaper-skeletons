@@ -1,47 +1,53 @@
 /* 8px grid: 8 / 16 / 24 / 40 / 48 / 56 / 72.
    Nested radius: outer = inner + padding (cards 16 = 8 inner + 8 pad).
-   Type: headline 15 / callout 13 / caption 12 / body 11 / small 10.
-   Hit: text buttons 40x20, icon 40, MODE primary 56. */
+   Surfaces mix the app accent at different opacities so menu, tabs,
+   and the main stage read as separate layers. */
 
 #skeletons {
-  background-color: mix(@theme_bg_color, #000000, 0.12);
+  background-color: mix(@theme_bg_color, #000000, 0.16);
   color: @theme_fg_color;
 }
 
 .section-status {
   min-height: 40px;
   padding: 0 8px;
-  background-color: mix(@theme_bg_color, @theme_fg_color, 0.08);
+  background-color: transparent;
   color: @theme_fg_color;
-  border-bottom: 1px solid @borders;
+  border: none;
 }
 
 .section-body {
-  background-color: mix(@theme_bg_color, #000000, 0.10);
+  background-color: transparent;
 }
 
 .section-tabs {
   background-color: transparent;
   color: @theme_fg_color;
   min-height: 56px;
-  padding: 0 8px;
+  padding: 0;
+  margin-bottom: -1px;
 }
 
 .section-stage {
-  background-color: transparent;
+  background-color: alpha(mix(@theme_bg_color, @theme_selected_bg_color, 0.04), 0.94);
   color: @theme_fg_color;
+  border: 1px solid alpha(@theme_selected_bg_color, 0.20);
+  border-radius: 16px;
+  margin: 0 0 8px 0;
+  padding: 8px;
+  box-shadow: 0 1px 0 alpha(#ffffff, 0.06), 0 10px 28px alpha(#000000, 0.18);
 }
 
 .section-footer {
   min-height: 72px;
   padding: 8px;
-  background-color: mix(@theme_bg_color, @theme_fg_color, 0.08);
+  background-color: transparent;
   color: @theme_fg_color;
-  border-top: 1px solid @borders;
+  border: none;
 }
 
 .nav-cluster {
-  padding: 0;
+  padding: 8px 16px;
 }
 
 .nav-cell {
@@ -65,11 +71,17 @@
   font-size: 13px;
 }
 
-.section-title {
+.section-title, .panel-title {
   font-weight: bold;
   letter-spacing: 2px;
   font-size: 15px;
   color: @theme_fg_color;
+}
+
+.panel-title {
+  letter-spacing: 3px;
+  opacity: 0.85;
+  padding: 4px 8px;
 }
 
 .rail-title {
@@ -80,26 +92,43 @@
 }
 
 .nav-pill {
-  background-color: mix(@theme_bg_color, @theme_fg_color, 0.08);
-  border: 1px solid @borders;
-  border-radius: 24px;
-  padding: 4px 8px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.tab-strip {
+  padding: 0;
 }
 
 .tab-icon {
-  background: none;
-  border: none;
+  background-color: alpha(@theme_selected_bg_color, 0.10);
+  border: 1px solid alpha(@theme_selected_bg_color, 0.16);
+  border-bottom: none;
   color: @theme_fg_color;
   font-weight: bold;
   letter-spacing: 1px;
   font-size: 15px;
-  padding: 4px 8px;
+  padding: 8px 12px 10px 12px;
   min-width: 72px;
-  border-radius: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  opacity: 0.78;
+  box-shadow: 0 2px 8px alpha(#000000, 0.08);
+}
+.tab-icon:hover {
+  opacity: 0.95;
+  background-color: alpha(@theme_selected_bg_color, 0.16);
 }
 .tab-icon:checked {
-  background-color: @theme_selected_bg_color;
-  color: @theme_selected_fg_color;
+  background-color: alpha(mix(@theme_bg_color, @theme_selected_bg_color, 0.28), 0.95);
+  color: @theme_fg_color;
+  border: 1px solid alpha(@theme_selected_bg_color, 0.40);
+  border-bottom-color: alpha(mix(@theme_bg_color, @theme_selected_bg_color, 0.28), 0.95);
+  opacity: 1;
+  box-shadow: inset 0 3px 0 @theme_selected_bg_color, 0 6px 16px alpha(@theme_selected_bg_color, 0.22);
 }
 .tab-badge {
   min-width: 44px;
@@ -108,7 +137,7 @@
   padding: 4px;
 }
 .tab-icon:checked .tab-badge {
-  background-color: mix(@theme_selected_fg_color, @theme_selected_bg_color, 0.18);
+  background-color: mix(@theme_selected_bg_color, @theme_bg_color, 0.28);
 }
 .tab-label {
   font-size: 15px;
@@ -131,16 +160,18 @@
   min-height: 40px;
   padding: 8px;
   border-radius: 8px;
-  border: 1px solid @borders;
-  background-color: mix(@theme_bg_color, @theme_fg_color, 0.06);
+  border: 1px solid alpha(@theme_selected_bg_color, 0.24);
+  background-color: alpha(@theme_selected_bg_color, 0.12);
+  box-shadow: 0 1px 0 alpha(#ffffff, 0.06), 0 2px 8px alpha(#000000, 0.10);
 }
 .icon-toggle:active, .icon-btn:active, .tactile:active {
-  background-color: mix(@theme_bg_color, @theme_fg_color, 0.16);
+  background-color: alpha(@theme_selected_bg_color, 0.22);
 }
 .icon-toggle:checked, .stomp:checked, .tactile:checked, .nav-primary:checked {
   background-color: @theme_selected_bg_color;
   color: @theme_selected_fg_color;
-  border-color: @theme_selected_bg_color;
+  border-color: alpha(@theme_selected_bg_color, 0.85);
+  box-shadow: 0 4px 12px alpha(@theme_selected_bg_color, 0.35);
 }
 
 .tactile {
@@ -150,8 +181,8 @@
   padding: 8px 20px;
   font-weight: bold;
   letter-spacing: 0.5px;
-  border: 1px solid @borders;
-  background-color: mix(@theme_bg_color, @theme_fg_color, 0.07);
+  border: 1px solid alpha(@theme_selected_bg_color, 0.24);
+  background-color: alpha(@theme_selected_bg_color, 0.12);
 }
 
 .nav-primary {
@@ -175,16 +206,17 @@
   font-weight: bold;
   min-width: 56px;
   min-height: 40px;
-  border: 1px solid @borders;
+  border: 1px solid alpha(@theme_selected_bg_color, 0.24);
 }
 
 .card {
-  background-color: mix(@theme_bg_color, @theme_fg_color, 0.08);
+  background-color: alpha(mix(@theme_bg_color, @theme_selected_bg_color, 0.12), 0.88);
   color: @theme_fg_color;
-  border: 1px solid mix(@borders, #000000, 0.25);
+  border: 1px solid alpha(@theme_selected_bg_color, 0.20);
   border-radius: 16px;
   padding: 8px;
   margin: 0 0 8px 0;
+  box-shadow: 0 1px 0 alpha(#ffffff, 0.05), 0 4px 12px alpha(#000000, 0.10);
 }
 
 .fx-card {
@@ -233,10 +265,13 @@
 }
 
 .side-rail {
-  min-width: 88px;
-  padding: 8px;
-  margin: 8px 0;
+  min-width: 96px;
+  padding: 4px;
+  margin: 4px 0 2px 0;
+  background-color: alpha(@theme_selected_bg_color, 0.05);
+  border: 1px solid alpha(@theme_selected_bg_color, 0.12);
   border-radius: 16px;
+  box-shadow: 0 4px 12px alpha(#000000, 0.08);
 }
 
 .track-chip {
@@ -276,10 +311,11 @@
   min-width: 200px;
   padding: 8px;
   border-radius: 16px;
-  border: 1px solid mix(@borders, #000000, 0.35);
+  border: 1px solid alpha(@theme_selected_bg_color, 0.28);
   border-left-width: 3px;
   border-left-color: alpha(#ffffff, 0.55);
-  background-color: mix(@theme_bg_color, @theme_fg_color, 0.10);
+  background-color: alpha(mix(@theme_bg_color, @theme_fg_color, 0.10), 0.92);
+  box-shadow: 0 6px 16px alpha(#000000, 0.12);
 }
 .pedal-title {
   font-family: "Noto Serif", "Liberation Serif", "DejaVu Serif", serif;

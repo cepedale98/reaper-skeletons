@@ -33,28 +33,32 @@ def icon_for_role(role: str) -> Path | None:
 
 
 class TabRow(Gtk.Box):
-    """Centered pill nav: IN → PEDALS → AMP → CAB → FX."""
+    """Tab strip: IN / PEDALS / AMP / CAB / FX, attached to the stage panel."""
 
     def __init__(self, tabs: list[tuple[str, str]]):
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-        self.set_halign(Gtk.Align.CENTER)
+        add_class(self, "tab-strip")
+        self.set_halign(Gtk.Align.FILL)
         self.set_hexpand(True)
-        self.set_margin_top(4)
-        self.set_margin_bottom(4)
+        self.set_valign(Gtk.Align.END)
+        self.set_margin_top(0)
+        self.set_margin_bottom(0)
         self.on_select = None
         self._buttons: dict[str, Gtk.ToggleButton] = {}
         self._notes: dict[str, Gtk.Label] = {}
         self._active: str | None = None
 
-        pill = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
-        add_class(pill, "nav-pill")
-        pill.set_halign(Gtk.Align.CENTER)
+        self.pill = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        add_class(self.pill, "nav-pill")
+        self.pill.set_halign(Gtk.Align.CENTER)
+        self.pill.set_hexpand(False)
 
-        for i, (role, label) in enumerate(tabs):
-            if i:
-                arrow = Gtk.Label(label="→")
-                add_class(arrow, "tab-arrow")
-                pill.append(arrow)
+        lead = Gtk.Box()
+        lead.set_hexpand(True)
+        trail = Gtk.Box()
+        trail.set_hexpand(True)
+
+        for role, label in tabs:
             btn = Gtk.ToggleButton()
             add_class(btn, "tab-icon")
             btn.set_has_frame(False)
@@ -83,10 +87,12 @@ class TabRow(Gtk.Box):
             col.append(note)
             btn.set_child(col)
             btn.connect("toggled", self._toggled, role)
-            pill.append(btn)
+            self.pill.append(btn)
             self._buttons[role] = btn
             self._notes[role] = note
-        self.append(pill)
+        self.append(lead)
+        self.append(self.pill)
+        self.append(trail)
         fx_note = self._notes.get("guitar.fx")
         if fx_note:
             fx_note.set_text("send")
@@ -108,6 +114,9 @@ class TabRow(Gtk.Box):
             btn.handler_unblock_by_func(self._toggled)
         if notify and self.on_select:
             self.on_select(role)
+
+    def active_button(self) -> Gtk.Widget | None:
+        return self._buttons.get(self._active) if self._active else None
 
     def set_dimmed(self, role: str, dimmed: bool) -> None:
         btn = self._buttons.get(role)

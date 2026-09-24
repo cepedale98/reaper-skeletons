@@ -6,6 +6,7 @@ from skeletons.gi_init import Gdk, Gtk
 
 from skeletons.gtkutil import add_class
 from skeletons.paths import css_path
+from skeletons.shell.chrome import Chassis
 from skeletons.shell.footer import Footer
 from skeletons.shell.livepage import LivePage
 from skeletons.shell.siderail import SideRail
@@ -47,8 +48,8 @@ class AppWindow(Gtk.ApplicationWindow):
         load_css()
 
         self.status = StatusBar(title)
-        self.in_rail = SideRail("IN")
-        self.out_rail = SideRail("OUT")
+        self.in_rail = SideRail("IN", knob_side="start")
+        self.out_rail = SideRail("OUT", knob_side="end")
 
         self.tabs = TabRow(tabs)
         tabs_bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
@@ -79,6 +80,7 @@ class AppWindow(Gtk.ApplicationWindow):
         stage.set_vexpand(True)
         stage.set_hexpand(True)
         stage.append(self.stack)
+        self.stage = stage
 
         center = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         center.set_hexpand(True)
@@ -97,7 +99,26 @@ class AppWindow(Gtk.ApplicationWindow):
         v.append(self.status)
         v.append(body)
         v.append(self.footer)
-        self.set_child(v)
+        v.set_halign(Gtk.Align.FILL)
+        v.set_valign(Gtk.Align.FILL)
+
+        self.chassis = Chassis()
+        overlay = Gtk.Overlay()
+        overlay.set_child(self.chassis)
+        overlay.add_overlay(v)
+        overlay.set_measure_overlay(v, True)
+        self.chassis.set_halign(Gtk.Align.FILL)
+        self.chassis.set_valign(Gtk.Align.FILL)
+        self.set_child(overlay)
+        self.chassis.watch(
+            status=self.status,
+            pill=self.tabs.pill,
+            cluster=self.footer.cluster,
+            footer=self.footer,
+            in_rail=self.in_rail,
+            out_rail=self.out_rail,
+            stage=self.stage,
+        )
 
         self.tabs.on_select = self._on_tab
         self.footer.tuner_btn.connect("toggled", self._on_tuner)
@@ -124,6 +145,7 @@ class AppWindow(Gtk.ApplicationWindow):
         self._set_tuner(False)
         self._set_scope(False)
         self.show_stage()
+        self.chassis.queue_draw()
 
     def _on_tuner(self, btn: Gtk.ToggleButton) -> None:
         if btn.get_active():
@@ -144,6 +166,7 @@ class AppWindow(Gtk.ApplicationWindow):
             self.stack.set_visible_child_name("__live")
         elif self.tabs.active:
             self.stack.set_visible_child_name(self.tabs.active)
+        self.chassis.queue_draw()
 
     def show_banner(self, text: str | None) -> None:
         self.status.set_warning(text)

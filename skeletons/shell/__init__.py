@@ -1,4 +1,5 @@
 from skeletons.shell.application import run_app
+from skeletons.shell.chrome import Chassis
 from skeletons.shell.footer import Footer
 from skeletons.shell.header import Header
 from skeletons.shell.livepage import LivePage
@@ -9,6 +10,7 @@ from skeletons.shell.window import AppWindow, load_css
 
 __all__ = [
     "AppWindow",
+    "Chassis",
     "Footer",
     "Header",
     "LivePage",
